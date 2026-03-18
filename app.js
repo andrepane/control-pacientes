@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 // =====================
 // Simple CAIT/Privado tracker (localStorage + Firebase)
@@ -8,12 +8,12 @@ import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/f
 const STORAGE_KEY = "cait_private_tracker_v1";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBkDRJqz2YoJPzD4xlIpu_ffyMQ1LBvydo",
-    authDomain: "registro-paciente-83692.firebaseapp.com",
-    projectId: "registro-paciente-83692",
-    storageBucket: "registro-paciente-83692.firebasestorage.app",
-    messagingSenderId: "191198228050",
-    appId: "1:191198228050:web:a07501143ac178ff3d798b"
+    apiKey: "AIzaSyDZBq_Eh8vhMNw3u2mgN1Q31Oct-BpAdFA",
+    authDomain: "control-pacientes-da599.firebaseapp.com",
+    projectId: "control-pacientes-da599",
+    storageBucket: "control-pacientes-da599.firebasestorage.app",
+    messagingSenderId: "264823770140",
+    appId: "1:264823770140:web:c3dc88ae0f6e52a8b8e3d9"
   };
 const FIREBASE_COLLECTION = "sharedState";
 const FIREBASE_DOC_ID = "default";
