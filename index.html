@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Control pacientes (CAIT / Privado)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__content">
+      <div class="topbar__title">
+        <h1>Control pacientes</h1>
+        <p class="subtitle">Seguimiento claro, rápido y ordenado.</p>
+      </div>
+      <nav class="tabs" aria-label="Secciones" role="tablist">
+        <button class="tab active" data-view="summary" type="button" role="tab" aria-selected="true">Resumen</button>
+        <button class="tab" data-view="cait" type="button" role="tab" aria-selected="false">CAIT</button>
+        <button class="tab" data-view="private" type="button" role="tab" aria-selected="false">Privado</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- RESUMEN -->
+    <section class="card" data-section="summary">
+      <div class="row">
+        <h2>Resumen global</h2>
+        <div class="hint">Este mes + fechas (rojo = atrasado, ámbar = pronto)</div>
+      </div>
+      <div class="row summaryControls">
+        <label class="sr-only" for="summarySearch">Buscar en resumen</label>
+        <input id="summarySearch" class="search" type="search" placeholder="Buscar por nombre..." aria-label="Buscar en resumen" />
+      </div>
+      <div class="row summaryQuickActions">
+        <div class="hint">Accesos rápidos para agregar pacientes.</div>
+        <div class="actions">
+          <button class="btn small primary" type="button" data-go-view="cait">Añadir CAIT</button>
+          <button class="btn small" type="button" data-go-view="private">Añadir Privado</button>
+        </div>
+      </div>
+      <div class="row actionsRow">
+        <div class="summaryMetaBlock">
+          <div class="hint" id="lastUpdated">Última actualización: —</div>
+          <div class="segmented summaryFilters" role="group" aria-label="Filtrar resumen">
+            <button class="segmentedBtn active" type="button" data-summary-filter="all" aria-pressed="true">Todo</button>
+            <button class="segmentedBtn" type="button" data-summary-filter="thismonth" aria-pressed="false">Este mes</button>
+            <button class="segmentedBtn" type="button" data-summary-filter="cait" aria-pressed="false">CAIT</button>
+            <button class="segmentedBtn" type="button" data-summary-filter="private" aria-pressed="false">Privado</button>
+            <button class="segmentedBtn" type="button" data-summary-filter="overdue" aria-pressed="false">Atrasadas</button>
+            <button class="segmentedBtn" type="button" data-summary-filter="soon" aria-pressed="false">Próximas</button>
+            <button class="segmentedBtn" type="button" data-summary-filter="missing" aria-pressed="false">Sin fecha</button>
+          </div>
+          <div class="segmented summarySubFilters" role="group" aria-label="Subfiltro resumen">
+            <button class="segmentedBtn active" type="button" data-summary-subfilter="all" aria-pressed="true">Todas</button>
+            <button class="segmentedBtn" type="button" data-summary-subfilter="attention" aria-pressed="false">Atención</button>
+            <button class="segmentedBtn" type="button" data-summary-subfilter="ok" aria-pressed="false">Al día</button>
+            <button class="segmentedBtn" type="button" data-summary-subfilter="privateDebt" aria-pressed="false">Privados</button>
+            <button class="segmentedBtn" type="button" data-summary-subfilter="byDate" aria-pressed="false">Por fechas</button>
+            <button class="segmentedBtn" type="button" data-summary-subfilter="missing" aria-pressed="false">Sin fecha</button>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn small" id="exportBtn" type="button">Exportar</button>
+          <label class="btn small fileBtn">
+            Importar
+            <input id="importInput" type="file" accept="application/json" />
+          </label>
+        </div>
+      </div>
+      <div id="summaryHighlights" class="summaryHighlights"></div>
+      <div id="summaryStats" class="stats"></div>
+      <div id="summaryList" class="list summaryList"></div>
+    </section>
+
+    <!-- CAIT -->
+    <section class="card hidden" data-section="cait">
+      <div class="row">
+        <h2>Pacientes CAIT</h2>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <label class="sr-only" for="caitSearch">Buscar paciente CAIT</label>
+        <input id="caitSearch" class="search" type="search" placeholder="Buscar..." aria-label="Buscar paciente CAIT" />
+      </div>
+      <form id="caitForm" class="form">
+        <label class="sr-only" for="caitName">Nombre o código del paciente CAIT</label>
+        <input id="caitName" type="text" placeholder="Nombre / código" required minlength="2" />
+        <label class="sr-only" for="caitBirth">Fecha de nacimiento</label>
+        <input id="caitBirth" type="date" aria-label="Fecha de nacimiento" />
+        <button class="btn primary" type="submit">Añadir</button>
+      </form>
+
+      <div id="caitList" class="list"></div>
+    </section>
+
+    <!-- PRIVADO -->
+    <section class="card hidden" data-section="private">
+      <div class="row">
+        <h2>Pacientes Privado</h2>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <label class="sr-only" for="privateSearch">Buscar paciente Privado</label>
+        <input id="privateSearch" class="search" type="search" placeholder="Buscar..." aria-label="Buscar paciente Privado" />
+      </div>
+      <form id="privateForm" class="form">
+        <label class="sr-only" for="privateName">Nombre o código del paciente Privado</label>
+        <input id="privateName" type="text" placeholder="Nombre / código" required minlength="2" />
+        <button class="btn primary" type="submit">Añadir</button>
+      </form>
+
+      <div id="privateList" class="list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Datos guardados localmente y sincronizados con Firebase.</small>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
